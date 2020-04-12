@@ -1,0 +1,1 @@
+maybe you can use the function giveScoreToProfessor() to set the value stored in the student pointer.

@@ -1,0 +1,29 @@
+-=-=-=[[Ghost Diary]]=-=-=-
+1. New page in diary
+2. Talk with ghost
+3. Listen to ghost
+4. Burn the page
+5. Go to sleep
+> 1 -> 2 -> -1 => lead to endless loop of printing "> size: can you not write that much?
+"
+
+
+-=-=-=[[Ghost Diary]]=-=-=-
+1. New page in diary
+2. Talk with ghost
+3. Listen to ghost
+4. Burn the page
+5. Go to sleep
+> 1
+1. Write on one side?
+2. Write on both sides?
+> 1
+size: -1
+too big to fit in a page
+> a
+> size: too big to fit in a page
+> size: too big to fit in a page
+> size: too big to fit in a page
+> size: too big to fit in a page
+> size: too big to fit in a page
+

