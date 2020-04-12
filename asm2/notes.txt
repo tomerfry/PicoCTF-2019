@@ -1,0 +1,1 @@
+Answer: picoCTF{0x105}
