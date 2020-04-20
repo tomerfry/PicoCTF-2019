@@ -1,0 +1,19 @@
+ELF 32bit, statically linked, stripped.
+
+
+vuln:
+
+esp->
+^
+|
+ebp-0x18
+|
+v 		
+		ebx
+ebp->	ebp
+		eip
+		arg0
+
+
+first eip overwrite:
+padding = 'A' * 0x1c
