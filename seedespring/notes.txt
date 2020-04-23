@@ -1,0 +1,41 @@
+ELF 32-bit shared object, dynamically linked.
+
+nc 2019shell1.picoctf.com 12269
+
+int main(int argc, char **argv):
+* The program does not need arguments.
+1. prints out a string.
+2. gets the time since epoch using the time() function.
+3. sets the random generator seed to the time since epoch value.
+
+int main(int argc, char **argv)
+{
+	time_t time_since_epoch;
+	int random_int, user_input;
+
+	puts("");
+	.
+	.
+
+	time_since_epoch = time(NULL);
+	srand(time_since_epoch)
+
+	for (int loop_index = 1; loop_index <= 30; loop_index++)
+	{
+		printf("LEVEL (%d/30)\n", loop_index);
+		puts("");
+		random_int = rand() & 0x0f;
+		printf("Guess the height: ");
+		scanf("%d", &user_input);
+
+		if (user_input != random_int)
+		{
+			puts("WRONG! Sorry, better luck next time!");
+			exit();
+		}
+	}
+
+	puts("Congratulation! You've won! Here is you");
+	get_flag();
+
+}

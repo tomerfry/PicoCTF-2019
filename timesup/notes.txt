@@ -1,0 +1,13 @@
+In [25]: def solve():
+    ...:     p = process('./times-up')
+    ...:     expr = p.read()
+    ...:     math_expr = re.findall('Challenge: (.+?)\nSetting alarm...\n', expr)[0]
+    ...:     solution = eval(math_expr)
+    ...:     p.send('{}\n'.format(solution))
+    ...:     print(p.read())
+    ...:     print(p.read())
+    ...:     p.close()
+    ...:     
+
+
+picoCTF{Gotta go fast. Gotta go FAST. #2d5896e7}
